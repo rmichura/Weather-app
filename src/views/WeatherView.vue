@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row class="justify-center">
-      <span style="font-size: 40px; margin-top: 1em; margin-bottom: 1em">Weather <span
+      <span style="font-size: 40px; margin-top: 1em; margin-bottom: 1em; color: #ff5b00">Weather <span
         style="color: teal">Forecast</span></span>
     </v-row>
     <v-row class="justify-center">
@@ -26,7 +26,7 @@
               <v-icon color="white">mdi-temperature-celsius</v-icon>
             </v-layout>
             <v-layout class="justify-center ma-2" style="width: 200px; color: white">
-              <span style="font-size: 20px">{{ city.main.humidity }}</span>
+              <span style="font-size: 20px">Humidity: {{ city.main.humidity }}</span>
               <v-icon color="white">mdi-percent</v-icon>
             </v-layout>
             <v-layout class="justify-center" style="width: 200px">
@@ -35,6 +35,7 @@
                 outlined
                 class="ma-2"
                 @click.stop="drawer = !drawer"
+                @click="moreInformation(index)"
               >
                 More
               </v-btn>
@@ -45,9 +46,8 @@
       <v-btn
         height="200"
         width="150"
-        style="border: 2px solid black; border-radius: 10px; background-color: white; margin-top: 1.2em; margin-left: 1em"
+        style="border: 2px solid teal; border-radius: 10px; background-color: white; margin-top: 1.2em; margin-left: 1em"
         @click.stop="dialog = true"
-        @click="test"
       >
         <v-icon
           color="teal">
@@ -64,15 +64,47 @@
       right
       app
       width="600"
+      src="https://cdn.pixabay.com/photo/2017/03/17/19/37/sky-2152463_960_720.jpg"
     >
-
+      <v-row class="d-flex align-center justify-center ma-2">
+        <span style="font-size: 15px; color: white; margin-top: 10em">Weather: {{ description }}</span>
+      </v-row>
+      <v-row class="justify-center">
+          <span
+            style="color: white; font-size: 50px;"
+          >{{ temp }}
+          <v-icon size="40" color="white" style="margin-top: -0.5em"
+          >
+            mdi-temperature-celsius
+          </v-icon>
+        </span>
+      </v-row>
+      <v-row class="justify-center" style="margin-bottom: 0.5em">
+        <span style="font-size: 25px; color: white">{{ city }} <v-icon color="white" size="30">mdi-circle-small</v-icon><span
+          style="font-size: 20px">{{ country }}</span></span>
+      </v-row>
+      <v-row class="justify-center ma-2">
+        <span style="font-size: 15px; color: white">Feels like: {{ feelLike }}</span>
+      </v-row>
+      <v-row class="justify-center ma-2">
+        <span style="font-size: 15px; color: white">Temp min: {{ tempMin }} <v-icon
+          color="white">mdi-circle-small</v-icon> Temp max: {{ tempMax }}</span>
+      </v-row>
+      <v-row class="justify-center ma-2">
+        <span style="font-size: 15px; color: white">Atmospheric pressure: {{ atmosphericPressure }} hPa</span>
+      </v-row>
+      <v-row class="justify-center ma-2">
+        <span style="font-size: 15px; color: white">Wind speed: {{ windSpeed }} m/s</span>
+      </v-row>
     </v-navigation-drawer>
 
     <v-dialog
       v-model="dialog"
       max-width="600"
     >
-      <v-card>
+      <v-card
+        height="200"
+      >
         <v-toolbar
           dark
           color="teal"
@@ -98,6 +130,7 @@
         <v-card-actions>
           <v-row class="justify-center ma-2">
             <v-btn
+              style="margin-top: 3em"
               color="teal"
               outlined
               block
@@ -125,7 +158,17 @@ export default {
       select: null,
       lat: '',
       lon: '',
-      drawer: null
+      drawer: null,
+      temp: '',
+      tempMin: '',
+      tempMax: '',
+      city: '',
+      country: '',
+      feelLike: '',
+      windSpeed: '',
+      atmosphericPressure: '',
+      description: ''
+
     }
   },
   computed: {
@@ -149,7 +192,6 @@ export default {
         }
       }
       this.$store.state.myCity.push(this.select)
-      // await this.$store.dispatch('currentCity')
       for (let coord of this.$store.state.myCity) {
         this.lat = coord.coord.lat
         this.lon = coord.coord.lon
@@ -162,8 +204,16 @@ export default {
       }
       this.select = ''
     },
-    test() {
-      console.log()
+    moreInformation(index) {
+      this.city = this.$store.getters.getCityFromApi[index].name
+      this.temp = this.$store.getters.getCityFromApi[index].main.temp
+      this.tempMin = this.$store.getters.getCityFromApi[index].main.temp_min
+      this.tempMax = this.$store.getters.getCityFromApi[index].main.temp_max
+      this.feelLike = this.$store.getters.getCityFromApi[index].main.feels_like
+      this.windSpeed = this.$store.getters.getCityFromApi[index].wind.speed
+      this.country = this.$store.getters.getCityFromApi[index].sys.country
+      this.atmosphericPressure = this.$store.getters.getCityFromApi[index].main.pressure
+      this.description = this.$store.getters.getCityFromApi[index].weather[0].description
     }
   }
 }
