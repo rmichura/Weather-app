@@ -30,7 +30,8 @@
             ></v-text-field>
             <v-row class="justify-center ma-10">
               <v-btn
-                color="primary"
+                color="teal"
+                dark
                 elevation="7"
                 large
                 :disabled="!valid"
