@@ -51,7 +51,7 @@ import Vue from 'vue'
 import router from "@/router";
 
 export default Vue.extend({
-  name: 'HelloWorld',
+  name: 'SignIn',
 
   data() {
     return {

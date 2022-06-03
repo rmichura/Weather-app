@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import cityList from "../../city.json";
-import axios from "axios";
 
 Vue.use(Vuex)
 
