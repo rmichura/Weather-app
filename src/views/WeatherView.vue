@@ -156,8 +156,6 @@ export default {
     return {
       dialog: false,
       select: null,
-      lat: '',
-      lon: '',
       drawer: null,
       temp: '',
       tempMin: '',
@@ -175,9 +173,6 @@ export default {
     cities() {
       return this.$store.getters.getCityList
     },
-    myCities() {
-      return this.$store.getters.getMyCity
-    },
     cityFromApi() {
       return this.$store.getters.getCityFromApi
     },
@@ -186,22 +181,24 @@ export default {
     async addCity() {
       this.dialog = false
 
-      for (let repeatCiy of this.$store.state.myCity) {
+      for (let repeatCiy of this.$store.getters.getMyCity) {
         if (repeatCiy.id === this.select.id) {
+          this.select = ''
           return alert("You have such already city")
         }
       }
-      this.$store.state.myCity.push(this.select)
-      for (let coord of this.$store.state.myCity) {
-        this.lat = coord.coord.lat
-        this.lon = coord.coord.lon
+      this.$store.commit('setMyCity', this.select)
+      for (let coords of this.$store.state.myCity) {
+        this.$store.commit('setLat', coords.coord.lat)
+        this.$store.commit('setLon', coords.coord.lon)
       }
       try {
-        let response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${this.lat}&lon=${this.lon}&appid=555e67159798f21c4b0a6c81f18ad428&units=metric`)
-        this.$store.state.cityFromApi.push(response.data)
+        let response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${this.$store.getters.getLat}&lon=${this.$store.getters.getLon}&appid=555e67159798f21c4b0a6c81f18ad428&units=metric`)
+        this.$store.commit('setCityFromApi', response.data)
       } catch (e) {
         console.log(e)
       }
+      await this.refreshMyCity()
       this.select = ''
     },
     moreInformation(index) {
@@ -214,6 +211,18 @@ export default {
       this.country = this.$store.getters.getCityFromApi[index].sys.country
       this.atmosphericPressure = this.$store.getters.getCityFromApi[index].main.pressure
       this.description = this.$store.getters.getCityFromApi[index].weather[0].description
+    },
+    async refreshMyCity() {
+      if (this.$store.getters.getMyCity.length > 0) {
+        this.$store.commit('setCityFromApiToEmpty', [])
+        for (let cityFormArray of this.$store.getters.getMyCity) {
+          let response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${cityFormArray.coord.lat}&lon=${cityFormArray.coord.lon}&appid=555e67159798f21c4b0a6c81f18ad428&units=metric`)
+          this.$store.commit('setCityFromApi', response.data)
+        }
+      }
+      setTimeout(() => {
+        this.refreshMyCity()
+      }, 60000)
     }
   }
 }
