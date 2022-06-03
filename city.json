@@ -1,0 +1,282 @@
+[
+  {
+    "id": 833,
+    "name": "Ḩeşār-e Sefīd",
+    "state": "",
+    "country": "IR",
+    "coord": {
+      "lon": 47.159401,
+      "lat": 34.330502
+    }
+  },
+  {
+    "id": 2960,
+    "name": "‘Ayn Ḩalāqīm",
+    "state": "",
+    "country": "SY",
+    "coord": {
+      "lon": 36.321911,
+      "lat": 34.940079
+    }
+  },
+  {
+    "id": 3245,
+    "name": "Taglag",
+    "state": "",
+    "country": "IR",
+    "coord": {
+      "lon": 44.98333,
+      "lat": 38.450001
+    }
+  },
+  {
+    "id": 3530,
+    "name": "Qabāghlū",
+    "state": "",
+    "country": "IR",
+    "coord": {
+      "lon": 46.168499,
+      "lat": 36.173302
+    }
+  },
+  {
+    "id": 5174,
+    "name": "‘Arīqah",
+    "state": "",
+    "country": "SY",
+    "coord": {
+      "lon": 36.48336,
+      "lat": 32.889809
+    }
+  },
+  {
+    "id": 2920538,
+    "name": "Giesensdorf",
+    "state": "",
+    "country": "DE",
+    "coord": {
+      "lon": 10.7,
+      "lat": 53.683331
+    }
+  },
+  {
+    "id": 2920545,
+    "name": "Giesenhausen",
+    "state": "",
+    "country": "DE",
+    "coord": {
+      "lon": 7.71667,
+      "lat": 50.700001
+    }
+  },
+  {
+    "id": 2920546,
+    "name": "Giesenhain",
+    "state": "",
+    "country": "DE",
+    "coord": {
+      "lon": 9.73333,
+      "lat": 50.76667
+    }
+  },
+  {
+    "id": 2920557,
+    "name": "Giesenbach",
+    "state": "",
+    "country": "DE",
+    "coord": {
+      "lon": 11.61508,
+      "lat": 48.385132
+    }
+  },
+  {
+    "id": 2920560,
+    "name": "Gieselwerder",
+    "state": "",
+    "country": "DE",
+    "coord": {
+      "lon": 9.55,
+      "lat": 51.599998
+    }
+  },
+  {
+    "id": 2920568,
+    "name": "Giesel",
+    "state": "",
+    "country": "DE",
+    "coord": {
+      "lon": 9.56667,
+      "lat": 50.5
+    }
+  },
+  {
+    "id": 2920572,
+    "name": "Giesdorf",
+    "state": "",
+    "country": "DE",
+    "coord": {
+      "lon": 6.45,
+      "lat": 50.183331
+    }
+  },
+  {
+    "id": 2920581,
+    "name": "Gierstädt",
+    "state": "",
+    "country": "DE",
+    "coord": {
+      "lon": 10.83333,
+      "lat": 51.049999
+    }
+  },
+  {
+    "id": 2920582,
+    "name": "Giersleben",
+    "state": "",
+    "country": "DE",
+    "coord": {
+      "lon": 11.56667,
+      "lat": 51.76667
+    }
+  },
+  {
+    "id": 2920588,
+    "name": "Giershausen",
+    "state": "",
+    "country": "DE",
+    "coord": {
+      "lon": 7.55,
+      "lat": 50.683331
+    }
+  },
+  {
+    "id": 2920589,
+    "name": "Giershausen",
+    "state": "",
+    "country": "DE",
+    "coord": {
+      "lon": 7.88333,
+      "lat": 50.383331
+    }
+  },
+  {
+    "id": 2920595,
+    "name": "Gierschnach",
+    "state": "",
+    "country": "DE",
+    "coord": {
+      "lon": 7.35,
+      "lat": 50.26667
+    }
+  },
+  {
+    "id": 2920620,
+    "name": "Giengen an der Brenz",
+    "state": "",
+    "country": "DE",
+    "coord": {
+      "lon": 10.24312,
+      "lat": 48.622189
+    }
+  },
+  {
+    "id": 2920623,
+    "name": "Gielsdorf",
+    "state": "",
+    "country": "DE",
+    "coord": {
+      "lon": 7.01667,
+      "lat": 50.73333
+    }
+  },
+  {
+    "id": 2920628,
+    "name": "Gielow",
+    "state": "",
+    "country": "DE",
+    "coord": {
+      "lon": 12.75,
+      "lat": 53.700001
+    }
+  },
+  {
+    "id": 2920630,
+    "name": "Gielert",
+    "state": "",
+    "country": "DE",
+    "coord": {
+      "lon": 7.0,
+      "lat": 49.76667
+    }
+  },
+  {
+    "id": 2920631,
+    "name": "Gieleroth",
+    "state": "",
+    "country": "DE",
+    "coord": {
+      "lon": 7.68333,
+      "lat": 50.666672
+    }
+  },
+  {
+    "id": 2920632,
+    "name": "Gielde",
+    "state": "",
+    "country": "DE",
+    "coord": {
+      "lon": 10.49366,
+      "lat": 52.036228
+    }
+  },
+  {
+    "id": 2920634,
+    "name": "Giekau",
+    "state": "",
+    "country": "DE",
+    "coord": {
+      "lon": 10.51667,
+      "lat": 54.316669
+    }
+  },
+  {
+    "id": 2920645,
+    "name": "Gieboldehausen",
+    "state": "",
+    "country": "DE",
+    "coord": {
+      "lon": 10.21667,
+      "lat": 51.616669
+    }
+  },
+  {
+    "id": 2920648,
+    "name": "Giebing",
+    "state": "",
+    "country": "DE",
+    "coord": {
+      "lon": 12.33333,
+      "lat": 47.816669
+    }
+  },
+  {
+    "id": 2920652,
+    "name": "Giebelstadt",
+    "state": "",
+    "country": "DE",
+    "coord": {
+      "lon": 9.94778,
+      "lat": 49.654171
+    }
+  },
+  {
+    "id": 2920686,
+    "name": "Gibbinghausen",
+    "state": "",
+    "country": "DE",
+    "coord": {
+      "lon": 7.4,
+      "lat": 50.916672
+    }
+  }
+]
