@@ -10,8 +10,8 @@ export default new Vuex.Store({
     cityList: cityList,
     myCity: [],
     cityFromApi: [],
-    lat: '',
-    lon: '',
+    lat: null,
+    lon: null,
   },
   getters: {
     getCityList(state) {
@@ -22,20 +22,31 @@ export default new Vuex.Store({
     },
     getCityFromApi(state) {
       return state.cityFromApi
+    },
+    getLat(state) {
+      return state.lat
+    },
+    getLon(state) {
+      return state.lon
     }
   },
   mutations: {
+    setLat(state, payload) {
+      state.lat = payload
+    },
+    setLon(state, payload) {
+      state.lon = payload
+    },
+    setMyCity(state: any, payload: []) {
+      state.myCity.push(payload);
+    },
+    setCityFromApi(state: any, payload: []) {
+      state.cityFromApi.push(payload);
+    },
+    setCityFromApiToEmpty(state, payload) {
+      state.cityFromApi = payload
+    },
   },
-  actions: {
-    // currentCity: async function ({state}) {
-    //   try {
-    //     const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${state.lat}&lon=${state.lon}&appid=555e67159798f21c4b0a6c81f18ad428&units=metric`)
-    //     state.cityFromApi.push(response as any)
-    //   } catch (e) {
-    //     console.log(e)
-    //   }
-    // }
-  },
-  modules: {
-  }
+  actions: {},
+  modules: {}
 })
