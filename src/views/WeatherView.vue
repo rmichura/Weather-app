@@ -19,14 +19,14 @@
         >
           <v-row class="ma-1">
             <v-layout class="justify-center" style="width: 200px;">
-              <span style="color: white; margin: 5px; font-size: 30px">{{ city.name }}</span>
+              <span style="color: white; margin: 5px; font-size: 30px">{{ city.city.name }}</span>
             </v-layout>
             <v-layout class="justify-center" style="width: 200px; color: white">
-              <span style="font-size: 25px">{{ city.main.temp }}</span>
+              <span style="font-size: 25px">{{ city.list[0].main.temp }}</span>
               <v-icon color="white">mdi-temperature-celsius</v-icon>
             </v-layout>
             <v-layout class="justify-center ma-2" style="width: 200px; color: white">
-              <span style="font-size: 20px">Humidity: {{ city.main.humidity }}</span>
+              <span style="font-size: 20px">Humidity: {{ city.list[0].main.humidity }}</span>
               <v-icon color="white">mdi-percent</v-icon>
             </v-layout>
             <v-layout class="justify-center" style="width: 200px">
@@ -96,6 +96,31 @@
       <v-row class="justify-center ma-2">
         <span style="font-size: 15px; color: white">Wind speed: {{ windSpeed }} m/s</span>
       </v-row>
+      <v-card style="margin-left: 4em; margin-right: 4em; margin-top: 2em;" class="transparent">
+        <v-sparkline
+          :value="temperatures"
+          :labels="dates"
+          :show-labels="true"
+          color="white"
+          height="120"
+          padding="12"
+          smooth
+          auto-draw
+          :label-size="9"
+        >
+        </v-sparkline>
+        <v-sparkline
+          style="position: absolute; top: 0; left: 0"
+          :value="humidity"
+          color="teal"
+          height="120"
+          padding="12"
+          smooth
+          auto-draw
+          :label-size="9"
+        >
+        </v-sparkline>
+      </v-card>
     </v-navigation-drawer>
 
     <v-dialog
@@ -151,7 +176,6 @@ import axios from "axios";
 
 export default {
   name: "WeatherView",
-
   data() {
     return {
       dialog: false,
@@ -165,8 +189,10 @@ export default {
       feelLike: '',
       windSpeed: '',
       atmosphericPressure: '',
-      description: ''
-
+      description: '',
+      dates: [],
+      temperatures: [],
+      humidity: [],
     }
   },
   computed: {
@@ -180,43 +206,64 @@ export default {
   methods: {
     async addCity() {
       this.dialog = false
-
-      for (let repeatCiy of this.$store.getters.getMyCity) {
-        if (repeatCiy.id === this.select.id) {
-          this.select = ''
-          return alert("You have such already city")
+      if (this.$store.getters.getMyCity.length < 10) {
+        for (let repeatCiy of this.$store.getters.getMyCity) {
+          if (repeatCiy.id === this.select.id) {
+            this.select = ''
+            alert("You have such already city")
+          }
         }
+        if (this.select === '') {
+          return
+        } else {
+          this.$store.commit('setMyCity', this.select)
+          for (let coords of this.$store.state.myCity) {
+            this.$store.commit('setLat', coords.coord.lat)
+            this.$store.commit('setLon', coords.coord.lon)
+          }
+          try {
+            const response = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${this.$store.getters.getLat}&lon=${this.$store.getters.getLon}&appid=555e67159798f21c4b0a6c81f18ad428&units=metric`)
+            this.$store.commit('setCityFromApi', response.data)
+          } catch (e) {
+            console.log(e)
+          }
+          this.refreshMyCity().catch(e => {
+            console.log(e)
+          })
+          this.select = ''
+        }
+      } else {
+        this.select = ''
+        alert("You can add just ten cities")
       }
-      this.$store.commit('setMyCity', this.select)
-      for (let coords of this.$store.state.myCity) {
-        this.$store.commit('setLat', coords.coord.lat)
-        this.$store.commit('setLon', coords.coord.lon)
-      }
-      try {
-        let response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${this.$store.getters.getLat}&lon=${this.$store.getters.getLon}&appid=555e67159798f21c4b0a6c81f18ad428&units=metric`)
-        this.$store.commit('setCityFromApi', response.data)
-      } catch (e) {
-        console.log(e)
-      }
-      await this.refreshMyCity()
-      this.select = ''
     },
     moreInformation(index) {
-      this.city = this.$store.getters.getCityFromApi[index].name
-      this.temp = this.$store.getters.getCityFromApi[index].main.temp
-      this.tempMin = this.$store.getters.getCityFromApi[index].main.temp_min
-      this.tempMax = this.$store.getters.getCityFromApi[index].main.temp_max
-      this.feelLike = this.$store.getters.getCityFromApi[index].main.feels_like
-      this.windSpeed = this.$store.getters.getCityFromApi[index].wind.speed
-      this.country = this.$store.getters.getCityFromApi[index].sys.country
-      this.atmosphericPressure = this.$store.getters.getCityFromApi[index].main.pressure
-      this.description = this.$store.getters.getCityFromApi[index].weather[0].description
+      let gettersFromApi = this.$store.getters.getCityFromApi[index]
+      this.city = gettersFromApi.city.name
+      this.temp = gettersFromApi.list[0].main.temp
+      this.tempMin = gettersFromApi.list[0].main.temp_min
+      this.tempMax = gettersFromApi.list[0].main.temp_max
+      this.feelLike = gettersFromApi.list[0].main.feels_like
+      this.windSpeed = gettersFromApi.list[0].wind.speed
+      this.country = gettersFromApi.city.country
+      this.atmosphericPressure = gettersFromApi.list[0].main.pressure
+      this.description = gettersFromApi.list[0].weather[0].description
+
+      this.dates = []
+      this.temperatures = []
+      this.humidity = []
+      for (let i = 0; i < 8; i++) {
+        this.dates.push(gettersFromApi.list[i].dt_txt.slice(11, -3))
+        this.temperatures.push(gettersFromApi.list[i].main.temp)
+        this.humidity.push(gettersFromApi.list[i].main.humidity)
+      }
     },
+
     async refreshMyCity() {
       if (this.$store.getters.getMyCity.length > 0) {
         this.$store.commit('setCityFromApiToEmpty', [])
         for (let cityFormArray of this.$store.getters.getMyCity) {
-          let response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${cityFormArray.coord.lat}&lon=${cityFormArray.coord.lon}&appid=555e67159798f21c4b0a6c81f18ad428&units=metric`)
+          let response = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${cityFormArray.coord.lat}&lon=${cityFormArray.coord.lon}&appid=555e67159798f21c4b0a6c81f18ad428&units=metric`)
           this.$store.commit('setCityFromApi', response.data)
         }
       }
