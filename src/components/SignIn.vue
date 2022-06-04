@@ -83,7 +83,6 @@ export default Vue.extend({
         router.push('/weather')
       } else {
         this.alert = true
-        // alert("We dont have such account")
       }
     }
   }

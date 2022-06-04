@@ -46,7 +46,7 @@
       <v-btn
         height="200"
         width="150"
-        style="border: 2px solid teal; border-radius: 10px; background-color: white; margin-top: 1.2em; margin-left: 1em"
+        style="border: 2px solid teal; border-radius: 10px; background-color: white; margin-top: 1.2em; margin-left: 1em; margin-bottom: 1em"
         @click.stop="dialog = true; alert = false; alertTenCity = false"
       >
         <v-icon
@@ -59,7 +59,6 @@
 
     <v-navigation-drawer
       v-model="drawer"
-      absolute
       temporary
       right
       app
