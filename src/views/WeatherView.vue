@@ -47,7 +47,7 @@
         height="200"
         width="150"
         style="border: 2px solid teal; border-radius: 10px; background-color: white; margin-top: 1.2em; margin-left: 1em"
-        @click.stop="dialog = true"
+        @click.stop="dialog = true; alert = false; alertTenCity = false"
       >
         <v-icon
           color="teal">
@@ -154,8 +154,26 @@
         </v-toolbar>
         <v-card-actions>
           <v-row class="justify-center ma-2">
+            <v-alert
+              v-model="alert"
+              type="error"
+              dense
+              outlined
+              style="margin-bottom: -0.5em"
+            >
+              You have already such city
+            </v-alert>
+            <v-alert
+              v-model="alertTenCity"
+              type="error"
+              dense
+              outlined
+              style="margin-bottom: -0.5em"
+            >
+              You can only add ten cities
+            </v-alert>
             <v-btn
-              style="margin-top: 3em"
+              style="margin-top: 1.5em"
               color="teal"
               outlined
               block
@@ -193,6 +211,8 @@ export default {
       dates: [],
       temperatures: [],
       humidity: [],
+      alert: false,
+      alertTenCity: false,
     }
   },
   computed: {
@@ -210,7 +230,8 @@ export default {
         for (let repeatCiy of this.$store.getters.getMyCity) {
           if (repeatCiy.id === this.select.id) {
             this.select = ''
-            alert("You have such already city")
+            this.dialog = true
+            this.alert = true
           }
         }
         if (this.select === '') {
@@ -234,7 +255,8 @@ export default {
         }
       } else {
         this.select = ''
-        alert("You can add just ten cities")
+        this.dialog = true
+        this.alertTenCity = true
       }
     },
     moreInformation(index) {

@@ -11,13 +11,13 @@
           elevation="8"
           height="320"
           width="600"
-          class="d-flex align-center"
         >
-          <v-col>
+          <v-col style="margin-top: 2em">
             <v-text-field
               v-model="login"
               label="Login"
               :rules="[rules.required]"
+              @click.stop="alert = false"
             ></v-text-field>
             <v-text-field
               v-model="password"
@@ -26,13 +26,25 @@
               :rules="[rules.required]"
               label="Password"
               @click:append="show = !show"
+              @click.stop="alert = false"
               @keyup.enter="LogIn"
             ></v-text-field>
-            <v-row class="justify-center ma-10">
+            <v-row class="justify-center">
+              <v-alert
+                v-model="alert"
+                type="error"
+                dense
+                outlined
+                style="margin-bottom: -1em; margin-top: 0.5em"
+              >
+                We dont have such an account
+              </v-alert>
+            </v-row>
+            <v-row class="justify-center" style="margin-top: 3em">
               <v-btn
                 color="teal"
-                dark
                 elevation="7"
+                style="color: white"
                 large
                 :disabled="!valid"
                 @click="LogIn"
@@ -59,6 +71,7 @@ export default Vue.extend({
       login: '',
       password: '',
       valid: true,
+      alert: false,
       rules: {
         required: (value: unknown) => !!value || 'Required.'
       }
@@ -69,7 +82,8 @@ export default Vue.extend({
       if (this.login === 'admin' && this.password === 'admin') {
         router.push('/weather')
       } else {
-        alert("We dont have such account")
+        this.alert = true
+        // alert("We dont have such account")
       }
     }
   }
