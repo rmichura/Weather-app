@@ -9,10 +9,12 @@ export default new Vuex.Store({
     cityList: cityList,
     myCity: [],
     cityFromApi: [],
+    auth: false,
     lat: null,
     lon: null,
   },
   getters: {
+    isAuth: state => state.auth,
     getCityList(state) {
       return state.cityList
     },
@@ -30,6 +32,9 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    setAuth(state, payload) {
+      state.auth = payload
+    },
     setLat(state, payload) {
       state.lat = payload
     },

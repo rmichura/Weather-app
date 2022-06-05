@@ -80,6 +80,7 @@ export default Vue.extend({
   methods: {
     LogIn() {
       if (this.login === 'admin' && this.password === 'admin') {
+        this.$store.commit('setAuth', true)
         router.push('/weather')
       } else {
         this.alert = true

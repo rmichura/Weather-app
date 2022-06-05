@@ -221,6 +221,9 @@ export default {
     cityFromApi() {
       return this.$store.getters.getCityFromApi
     },
+    auth() {
+      return this.$store.getters.isAuth;
+    }
   },
   methods: {
     async addCity() {
